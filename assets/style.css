@@ -251,3 +251,13 @@ h1 .ln > span { display: inline-block; }
 .hero-links a { display: inline-block; }
 .hero-links a:hover::after { display: inline-block; transform: translate(2px, -2px); }
 .filters button { transition: background-color .15s, color .15s; }
+
+/* Brilliancy screenshots */
+.shots { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin: 1.5rem 0 1rem; }
+.shots figure { margin: 0; }
+.shots img { display: block; width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--rule); background: #fff;
+  box-shadow: 0 1px 0 var(--rule), 0 12px 28px -18px rgba(27, 24, 48, .45); transition: transform .3s cubic-bezier(.2, .7, .1, 1); }
+.shots figure:hover img { transform: translateY(-4px); }
+.shots figcaption { font-size: .95rem; color: var(--muted); margin-top: .75rem; line-height: 1.45; }
+.shots figcaption b { color: var(--ink); font-weight: 600; }
+@media (max-width: 860px) { .shots { grid-template-columns: 1fr; gap: 28px; } }
