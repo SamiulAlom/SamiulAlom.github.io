@@ -10,6 +10,15 @@ GITHUB = "https://github.com/SamiulAlom"
 LINKEDIN = "https://www.linkedin.com/in/md-samiul-alom-087124227/"
 SITE_URL = "https://samiulalom.github.io/"
 READ = "22 Nov 2026"
+CITATIONS, H_INDEX = 67, 5
+# Weekly refresh (refresh_scholar.py) writes data/scholar.json; when present it overrides the counts above.
+_sj = pathlib.Path(__file__).resolve().parent.parent / "data" / "scholar.json"
+if _sj.exists():
+    import json as _json, datetime as _dt
+    _d = _json.loads(_sj.read_text(encoding="utf-8"))
+    READ = _dt.date.fromisoformat(_d["read"]).strftime("%d %b %Y").lstrip("0")
+    CITATIONS, H_INDEX = _d["citations"], _d["h_index"]
+    PUBS = [p[:7] + (_d["cites"].get(p[0], p[7]),) + p[8:] for p in PUBS]
 THEMES = ("health", "vision", "nlp")
 SHOW_CONF = 8          # conference papers visible before "Show all"
 e = html.escape
@@ -206,8 +215,8 @@ page = f'''<!doctype html>
   <div class="col">
     <h2 id="h-record" class="vh">Record</h2>
     <dl class="ledger">
-      <div><dt>Citations</dt><dd>67</dd></div>
-      <div><dt>h-index</dt><dd>5</dd></div>
+      <div><dt>Citations</dt><dd>{CITATIONS}</dd></div>
+      <div><dt>h-index</dt><dd>{H_INDEX}</dd></div>
       <div><dt>Published papers</dt><dd>{len(PUBS)}<span class="sub2 mono">{len(journals)} journal &middot; {len(confs)} conference &middot; {n_first} first-author</span></dd></div>
       <div><dt>Journal quartiles</dt><dd class="qd">{quart}</dd></div>
     </dl>
