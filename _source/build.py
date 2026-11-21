@@ -170,10 +170,12 @@ page = f'''<!doctype html>
     </ul>
     <p class="hero-links">{profiles}</p>
   </div>
-  <figure class="hero-media">
-    <div class="chrome" aria-hidden="true"><i></i><i></i><i></i><span class="mono">Research Desk &middot; Brilliancy Research</span></div>
-    <img src="assets/work/research-desk.jpg" width="1280" height="635" alt="Research Desk, a task and daily-update system I built for Brilliancy Research, shown with demo data.">
-    <figcaption class="mono">Research Desk, one of five systems I built at Brilliancy Research (demo data).</figcaption>
+  <figure class="hero-media live" id="live">
+    <div class="chrome"><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><span class="mono"><b class="pulse" aria-hidden="true"></b>explain() &middot; live</span>
+      <div class="tabs mono" role="group" aria-label="Choose an example"><button type="button" aria-pressed="true">Health</button><button type="button" aria-pressed="false">Imaging</button><button type="button" aria-pressed="false">Language</button></div>
+    </div>
+    <div class="stage"></div>
+    <figcaption class="mono">How my models explain a prediction. Illustration with generated example values, not real patient or study data.</figcaption>
   </figure>
 </header>
 
@@ -329,6 +331,7 @@ page = f'''<!doctype html>
 </nav>
 
 <script src="assets/site.js" defer></script>
+<script src="assets/live.js" defer></script>
 </body>
 </html>
 '''
