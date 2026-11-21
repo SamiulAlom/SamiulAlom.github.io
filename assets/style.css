@@ -315,3 +315,4 @@ h3 { font-weight: 600; font-size: 1.3rem; line-height: 1.25; letter-spacing: -.0
 .stage svg { display: block; width: 100%; height: auto; }
 .anim .hero-media.live { animation-name: lift-flat; }
 @media (max-width: 520px) { .tabs { margin-left: 0; width: 100%; } .tabs button { flex: 1; } }
+.hero-links a.cvlink::after { content: " \2193"; }

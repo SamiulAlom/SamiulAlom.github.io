@@ -141,7 +141,7 @@ tomato = BY_TITLE["TomatoNet-R50: A ResNet50-Based Deep Learning Architecture fo
 suicide = BY_TITLE["An Explainable Triple-Layered Ensemble Model for Early Prediction of Suicide Risk Using Machine Learning"]
 
 S, G, L = e(SCHOLAR), e(GITHUB), e(LINKEDIN)
-profiles = f'<a href="{S}" rel="noopener">Google Scholar</a><a href="{G}" rel="noopener">GitHub</a><a href="{L}" rel="noopener">LinkedIn</a>'
+profiles = f'<a href="{S}" rel="noopener">Google Scholar</a><a href="{G}" rel="noopener">GitHub</a><a href="{L}" rel="noopener">LinkedIn</a><a class="cvlink" href="assets/Md-Samiul-Alom-CV.pdf" download>CV (PDF)</a>'
 
 import json
 LDJSON = json.dumps({
@@ -245,7 +245,7 @@ page = f'''<!doctype html>
 <section class="band" id="paper-to-tool" aria-labelledby="h-ptt">
   <div class="col">
     <p class="eyebrow mono">From paper to tool</p>
-    <h2 id="h-ptt">Two papers I turned into <em>something people use.</em></h2>
+    <h2 id="h-ptt">Two papers I turned into <em>something you can run.</em></h2>
     <div class="chains">
       <article class="chain">
         <ol class="steps mono"><li><span>01</span> Method</li><li><span>02</span> Proof</li><li><span>03</span> Tool</li></ol>
@@ -256,7 +256,7 @@ page = f'''<!doctype html>
       <article class="chain">
         <ol class="steps mono"><li><span>01</span> Method</li><li><span>02</span> Proof</li><li><span>03</span> Tool</li></ol>
         <p><b>A three-layer explainable ensemble</b> for early suicide-risk prediction, my thesis, published in <a href="{e(link(suicide))}" rel="noopener"><em>Engineering Reports</em></a> (Wiley, Q2).</p>
-        <p>The full pipeline, including the SHAP and LIME explanations, is a public notebook anyone can rerun. <a href="{e(gh('Suicide-prediction'))}" rel="noopener">Code</a></p>
+        <p>The full pipeline, including the SHAP and LIME explanations, is a public notebook with its data files. <a href="{e(gh('Suicide-prediction'))}" rel="noopener">Code</a></p>
         <div class="metric mono"><span>{suicide[7]}</span> citation &middot; first author &middot; doi:{e(suicide[8])}</div>
       </article>
     </div>
@@ -270,8 +270,8 @@ page = f'''<!doctype html>
       <h3>Brilliancy Research Limited <span class="mono cnt">Software Engineer and Research Assistant &middot; Oct 2026&ndash;</span></h3>
       <p class="prose">I build and maintain the company&rsquo;s own software, used every day by staff and clients. React, TypeScript, Supabase and Cloudflare.</p>
       <div class="shots">
-        {shot("research-desk", "Research Desk", "Managers assign tasks to research assistants, who post what they did each day; dashboards show who is on track.", "Research Desk dashboard: task counts, tasks by status, tasks waiting to be assigned and today&rsquo;s work updates.", cls="featured")}
-        {shot("accounts", "Accounts and CRM", "Clients, quotes, invoices in Taka, bKash, Nagad and bank payments, and double-entry books with cash-flow reports.", "Accounts dashboard: cash, money owed, invoices, profit, a six-month chart and a cash forecast. Names blurred.")}
+        {shot("research-desk", "Research Desk", "Managers assign tasks to research assistants, who post what they did each day; dashboards show who is on track. Shown with demo data.", "Research Desk dashboard: task counts, tasks by status, tasks waiting to be assigned and today&rsquo;s work updates.", cls="featured")}
+        {shot("accounts", "Accounts and CRM", "Clients, quotes, invoices in Taka, bKash, Nagad and bank payments, and double-entry books with cash-flow reports. Shown with demo data; names blurred.", "Accounts dashboard: cash, money owed, invoices, profit, a six-month chart and a cash forecast. Names blurred.")}
         {shot("appointment", "Appointment booking", "Clients choose a service, a meeting type and a time; the booking goes into Google Calendar with an email confirmation.", "Booking page of the appointment system: consultation services with durations.")}
         {shot("classroom", "Brilliancy Classroom", "Portal for IELTS and research classes: admin and student sides, class tasks, grading, attendance and reminders.", "Sign-in screen of Brilliancy Classroom.")}
         {shot("attendance", "Attendance system", "Office check-in and check-out for staff, with weekly to yearly reports and CSV export.", "Sign-in screen of the employee attendance portal.")}
