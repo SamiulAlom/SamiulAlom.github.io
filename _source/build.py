@@ -134,6 +134,18 @@ suicide = BY_TITLE["An Explainable Triple-Layered Ensemble Model for Early Predi
 S, G, L = e(SCHOLAR), e(GITHUB), e(LINKEDIN)
 profiles = f'<a href="{S}" rel="noopener">Google Scholar</a><a href="{G}" rel="noopener">GitHub</a><a href="{L}" rel="noopener">LinkedIn</a>'
 
+import json
+LDJSON = json.dumps({
+    "@context": "https://schema.org", "@type": "Person", "name": "Md. Samiul Alom", "url": SITE_URL,
+    "image": SITE_URL + "assets/share-card.png",
+    "jobTitle": ["Adjunct Research Associate", "Software Engineer and Research Assistant"],
+    "worksFor": [{"@type": "Organization", "name": "Miyan Research Institute"}, {"@type": "Organization", "name": "Brilliancy Research Limited"}],
+    "alumniOf": {"@type": "CollegeOrUniversity", "name": "International University of Business Agriculture and Technology (IUBAT)"},
+    "address": {"@type": "PostalAddress", "addressLocality": "Dhaka", "addressCountry": "BD"},
+    "knowsAbout": ["Explainable machine learning", "Medical image analysis", "Bangla natural language processing", "Federated learning", "Web development"],
+    "sameAs": [SCHOLAR, GITHUB, LINKEDIN],
+}, ensure_ascii=False).replace("</", "<\\/")
+
 conf_items = "".join(item(p, extra=(i >= SHOW_CONF)) for i, p in enumerate(confs))
 
 page = f'''<!doctype html>
@@ -147,7 +159,16 @@ page = f'''<!doctype html>
 <meta property="og:description" content="Explainable models, built into working software.">
 <meta property="og:type" content="profile">
 <meta property="og:url" content="{SITE_URL}">
-<meta property="og:image" content="{SITE_URL}assets/work/research-desk.jpg">
+<meta property="og:image" content="{SITE_URL}assets/share-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Md. Samiul Alom: Explainable models, built into working software.">
+<meta property="og:site_name" content="Md. Samiul Alom">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Md. Samiul Alom">
+<meta name="twitter:description" content="Explainable models, built into working software. {len(PUBS)} papers on health records, medical and plant images and Bangla text.">
+<meta name="twitter:image" content="{SITE_URL}assets/share-card.png">
+<script type="application/ld+json">{LDJSON}</script>
 <link rel="canonical" href="{SITE_URL}">
 <meta name="theme-color" content="#15122A">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">

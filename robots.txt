@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://samiulalom.github.io/sitemap.xml
