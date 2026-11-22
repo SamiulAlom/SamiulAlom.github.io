@@ -196,7 +196,7 @@ page = f'''<!doctype html>
     <h1><span class="ln"><span>Explainable models,</span></span> <span class="ln"><span>built into <em>working</em> software.</span></span></h1>
     <p class="lede">I train machine-learning models for health records, medical and plant images, and Bangla text, and show what drives each prediction. I also build the web software a research company runs on every day.</p>
     <ul class="pills mono" aria-label="Jump to">
-      <li><a href="#work">Projects</a></li><li><a href="#research">Research</a></li><li><a href="#publications">{len(PUBS)} papers</a></li>
+      <li><a href="#work">Projects</a></li><li><a href="#research">Research</a></li><li><a href="#publications">Papers</a></li>
     </ul>
     <p class="hero-links">{profiles}</p>
   </div>
@@ -352,7 +352,7 @@ page = f'''<!doctype html>
       </a>
     </div>
     <p class="hero-links">{profiles}</p>
-    <p class="mono small">Dhaka, Bangladesh &middot; Figures checked {READ}</p>
+    <p class="mono small">Dhaka, Bangladesh &middot; Latest version &middot; {READ}</p>
   </div>
 </footer>
 
