@@ -237,7 +237,7 @@ page = f'''<!doctype html>
         <div><dt class="mono">Trustworthy AI</dt><dd>SHAP, LIME, Grad-CAM, calibration, uncertainty</dd></div>
         <div><dt class="mono">Web and software</dt><dd>React, Next.js, TypeScript, Node.js, Flask, Django</dd></div>
         <div><dt class="mono">Data and cloud</dt><dd>Supabase/PostgreSQL, MySQL, Cloudflare Workers, Git</dd></div>
-        <div><dt class="mono">Languages</dt><dd>Python, C, C++, JavaScript, SQL; Bangla and English</dd></div>
+        <div><dt class="mono">Languages</dt><dd>Python, C, C++, JavaScript, SQL; Bangla (native), English (IELTS Academic 6.0, CEFR B2)</dd></div>
       </dl>
     </div>
   </div>
