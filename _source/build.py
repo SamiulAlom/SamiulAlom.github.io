@@ -141,7 +141,9 @@ tomato = BY_TITLE["TomatoNet-R50: A ResNet50-Based Deep Learning Architecture fo
 suicide = BY_TITLE["An Explainable Triple-Layered Ensemble Model for Early Prediction of Suicide Risk Using Machine Learning"]
 
 S, G, L = e(SCHOLAR), e(GITHUB), e(LINKEDIN)
-profiles = f'<a href="{S}" rel="noopener">Google Scholar</a><a href="{G}" rel="noopener">GitHub</a><a href="{L}" rel="noopener">LinkedIn</a><a class="cvlink" href="assets/Md-Samiul-Alom-CV.pdf" download>CV (PDF)</a>'
+import hashlib
+CVV = hashlib.md5(pathlib.Path('E:/Claude/portfolio-site/assets/Md-Samiul-Alom-CV.pdf').read_bytes()).hexdigest()[:8]
+profiles = f'<a href="{S}" rel="noopener">Google Scholar</a><a href="{G}" rel="noopener">GitHub</a><a href="{L}" rel="noopener">LinkedIn</a><a class="cvlink" href="assets/Md-Samiul-Alom-CV.pdf?v={CVV}" download>CV (PDF)</a>'
 
 import json
 LDJSON = json.dumps({
