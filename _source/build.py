@@ -202,7 +202,7 @@ page = f'''<!doctype html>
   </div>
   <figure class="hero-media live" id="live">
     <div class="chrome"><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><span class="mono"><b class="pulse" aria-hidden="true"></b>explain() &middot; live</span>
-      <div class="tabs mono" role="group" aria-label="Choose an example"><button type="button" aria-pressed="true">Health</button><button type="button" aria-pressed="false">Imaging</button><button type="button" aria-pressed="false">Language</button></div>
+      <div class="tabs mono" role="group" aria-label="Choose an example"><button type="button" aria-pressed="true">Health</button><button type="button" aria-pressed="false">Imaging</button><button type="button" aria-pressed="false">Language</button><button type="button" aria-pressed="false">Federated</button><button type="button" aria-pressed="false">Software</button></div>
     </div>
     <div class="stage"></div>
     <figcaption class="mono">How my models explain a prediction. Illustration with generated example values, not real patient or study data.</figcaption>
@@ -231,6 +231,14 @@ page = f'''<!doctype html>
     <div>
       <p class="prose">I finished a B.Sc. in Computer Science and Engineering at IUBAT in January 2026 (CGPA 3.74/4.00). My thesis, an explainable three-layer ensemble for early suicide-risk prediction, was published in <em>Engineering Reports</em>. Since February 2026 I have been an Adjunct Research Associate at Miyan Research Institute, working with more than eight faculty members on experiments, model evaluation and manuscripts. In October 2026 I joined Brilliancy Research in Dhaka as a software engineer and research assistant.</p>
       <p class="prose">In my clinical, imaging and language work I pair each prediction with a feature-attribution view (SHAP or LIME) so the user can see which inputs drove it. I use ensembles, CNNs, vision transformers and federated learning, and I build the software around the models in React, TypeScript, Flask and Django.</p>
+      <dl class="toolkit">
+        <div><dt class="mono">Machine learning</dt><dd>scikit-learn, XGBoost, ensembles, federated learning</dd></div>
+        <div><dt class="mono">Deep learning</dt><dd>PyTorch, TensorFlow, Keras; CNNs, vision transformers, Bangla transformers</dd></div>
+        <div><dt class="mono">Trustworthy AI</dt><dd>SHAP, LIME, Grad-CAM, calibration, uncertainty</dd></div>
+        <div><dt class="mono">Web and software</dt><dd>React, Next.js, TypeScript, Node.js, Flask, Django</dd></div>
+        <div><dt class="mono">Data and cloud</dt><dd>Supabase/PostgreSQL, MySQL, Cloudflare Workers, Git</dd></div>
+        <div><dt class="mono">Languages</dt><dd>Python, C, C++, JavaScript, SQL; Bangla and English</dd></div>
+      </dl>
     </div>
   </div>
 </section>

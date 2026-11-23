@@ -307,7 +307,7 @@ h3 { font-weight: 600; font-size: 1.3rem; line-height: 1.25; letter-spacing: -.0
 .live .chrome > span { display: inline-flex; align-items: center; gap: 7px; color: var(--soft-night); }
 .pulse { width: 7px; height: 7px; border-radius: 50%; background: #4ED37A; box-shadow: 0 0 0 0 rgba(78, 211, 122, .6); animation: pulse 2s infinite; }
 @keyframes pulse { 70% { box-shadow: 0 0 0 7px rgba(78, 211, 122, 0); } 100% { box-shadow: 0 0 0 0 rgba(78, 211, 122, 0); } }
-.tabs { margin-left: auto; display: flex; gap: 4px; }
+.tabs { margin-left: auto; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px; }
 .tabs button { font: 500 .72rem var(--mono); color: var(--muted-night); background: transparent; border: 1px solid var(--rule-night); border-radius: 999px; padding: .25rem .7rem; cursor: pointer; }
 .tabs button:hover { color: var(--paper); border-color: var(--muted-night); }
 .tabs button[aria-pressed="true"] { background: var(--saffron); border-color: var(--saffron); color: var(--night); }
@@ -316,3 +316,10 @@ h3 { font-weight: 600; font-size: 1.3rem; line-height: 1.25; letter-spacing: -.0
 .anim .hero-media.live { animation-name: lift-flat; }
 @media (max-width: 520px) { .tabs { margin-left: 0; width: 100%; } .tabs button { flex: 1; } }
 .hero-links a.cvlink::after { content: " \2193"; }
+
+/* About: toolkit list */
+.toolkit { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 28px; margin: 28px 0 0; border-top: 1px solid var(--rule, #DDD6C8); }
+.toolkit div { padding: 12px 0; border-bottom: 1px solid var(--rule, #DDD6C8); }
+.toolkit dt { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--alta, #B23A22); margin: 0 0 4px; }
+.toolkit dd { margin: 0; font-size: 15px; line-height: 1.45; }
+@media (max-width: 640px) { .toolkit { grid-template-columns: 1fr; } }

@@ -1,5 +1,5 @@
 // Live hero illustration: a model explaining its predictions in real time.
-// Three scenes from the research areas on this page (health records, leaf images, news text).
+// Five scenes: health records, leaf images, news text, federated training and a software request.
 // Values are generated examples for illustration, never real patient or study data.
 (function () {
   var host = document.getElementById('live');
@@ -263,6 +263,160 @@
         var kr = ease((t - 1600) / 800);
         ranked.forEach(function (r) { r.bar.setAttribute('width', (120 * r.a * kr).toFixed(1)); r.val.textContent = (r.a * kr).toFixed(2); });
         bars.draw((t - 1900) / 900);
+      }
+    });
+  })();
+
+  /* ---------- scene 4: federated training (hospitals keep their data) ---------- */
+  (function () {
+    var g = el('g', {}, svg);
+    txt(18, 26, 'FEDERATED TRAINING', { 'font-size': 9, 'letter-spacing': 1.5 }, g);
+    var server = { x: 410, y: 118 };
+    var probe = el('path', { d: '', fill: 'none' }, g);
+    var sites = ['Hospital A', 'Hospital B', 'Hospital C'].map(function (n, i) {
+      var y = 62 + i * 70;
+      el('rect', { x: 16, y: y - 22, width: 150, height: 52, rx: 8, fill: C.node }, g);
+      txt(28, y - 4, n, { fill: C.ink }, g);
+      for (var k = 0; k < 9; k++) el('circle', { cx: 32 + k * 9, cy: y + 12, r: 2.4, fill: '#6E668F' }, g);
+      el('rect', { x: 124, y: y + 8, width: 32, height: 6, rx: 3, fill: C.dim }, g);
+      var bar = el('rect', { x: 124, y: y + 8, width: 0, height: 6, rx: 3, fill: C.up }, g);
+      var d = 'M166 ' + y + ' C260 ' + y + ' 300 ' + server.y + ' ' + (server.x - 30) + ' ' + server.y;
+      el('path', { d: d, fill: 'none', stroke: C.dim, 'stroke-width': 1, 'stroke-dasharray': '3 4' }, g);
+      return { y: y, bar: bar, d: d, up: el('rect', { width: 8, height: 8, rx: 2, fill: C.up, opacity: 0 }, g),
+               down: el('circle', { r: 4, fill: C.down, opacity: 0 }, g) };
+    });
+    txt(18, 266, 'raw records stay', { 'font-size': 9 }, g); txt(18, 280, 'at each hospital', { 'font-size': 9 }, g);
+    txt(236, 60, 'model updates only', { 'font-size': 9 }, g);
+    var ring = el('circle', { cx: server.x, cy: server.y, r: 30, fill: C.node, stroke: C.up, 'stroke-width': 1.4 }, g);
+    var pulse = el('circle', { cx: server.x, cy: server.y, r: 30, fill: 'none', stroke: C.up, opacity: 0 }, g);
+    txt(server.x, server.y - 2, 'global', { 'text-anchor': 'middle', fill: C.ink, 'font-size': 10 }, g);
+    txt(server.x, server.y + 11, 'model', { 'text-anchor': 'middle', fill: C.ink, 'font-size': 10 }, g);
+    var rlab = txt(server.x, server.y + 50, 'round 0', { 'text-anchor': 'middle', 'font-size': 10 }, g);
+    var cx0 = 236, cx1 = 500, cy0 = 330, cy1 = 256;
+    txt(220, 242, 'GLOBAL AUC BY ROUND (EXAMPLE)', { 'font-size': 9, 'letter-spacing': 1.2 }, g);
+    el('line', { x1: cx0, x2: cx1, y1: cy0, y2: cy0, stroke: '#5A5282' }, g);
+    [0.7, 0.8, 0.9].forEach(function (v) { var yy = cy0 - (v - 0.6) / 0.35 * (cy0 - cy1); el('line', { x1: cx0, x2: cx1, y1: yy, y2: yy, stroke: C.dim, 'stroke-dasharray': '2 4' }, g); txt(cx0 - 6, yy + 3, v.toFixed(1), { 'text-anchor': 'end', 'font-size': 8 }, g); });
+    var line = el('polyline', { points: '', fill: 'none', stroke: C.up, 'stroke-width': 1.8 }, g);
+    var marks = []; for (var m = 0; m < 8; m++) marks.push(el('circle', { r: 2.6, fill: C.up, opacity: 0 }, g));
+    var head = el('circle', { r: 3.5, fill: C.up, opacity: 0 }, g);
+    var auc = txt(cx1, 242, '', { 'text-anchor': 'end', fill: C.ink, 'font-size': 10 }, g);
+    var round = 0, hist = [0.66], ROUNDS = 8, speed = [1, 1, 1];
+    function pt(i, v) { return [cx0 + (cx1 - cx0) * i / (ROUNDS - 1), cy0 - (v - 0.6) / 0.35 * (cy0 - cy1)]; }
+    function nextRound() {
+      if (round >= ROUNDS - 1) { round = 0; hist = [0.66]; }
+      round++;
+      speed = sites.map(function () { return rnd(0.6, 1); });
+      hist.push(0.66 + 0.24 * (1 - Math.exp(-round / 2.6)) + rnd(-0.012, 0.012));
+      rlab.textContent = 'round ' + round + ' of ' + (ROUNDS - 1);
+    }
+    function along(node, d, u, isCircle) {
+      if (u <= 0 || u >= 1) { node.setAttribute('opacity', 0); return; }
+      probe.setAttribute('d', d);
+      var L = probe.getTotalLength(), q = probe.getPointAtLength(L * ease(u));
+      if (isCircle) { node.setAttribute('cx', q.x); node.setAttribute('cy', q.y); }
+      else { node.setAttribute('x', q.x - 4); node.setAttribute('y', q.y - 4); }
+      node.setAttribute('opacity', 1);
+    }
+    scenes.push({
+      g: g, name: 'Federated', period: 4000,
+      start: nextRound,
+      tick: function (t) {
+        sites.forEach(function (s, i) {
+          s.bar.setAttribute('width', (32 * ease(t / (1000 * speed[i]))).toFixed(1));
+          along(s.up, s.d, (t - 1000 - i * 120) / 900, false);
+          along(s.down, s.d, 1 - (t - 2700 - i * 80) / 900, true);
+        });
+        var pu = (t - 1950) / 600, on = pu > 0 && pu < 1;
+        pulse.setAttribute('opacity', on ? (1 - pu).toFixed(2) : 0);
+        pulse.setAttribute('r', (30 + Math.max(0, Math.min(1, pu)) * 22).toFixed(1));
+        ring.setAttribute('stroke', on ? C.hot : C.up);
+        var k = ease((t - 2000) / 700), pts = [];
+        hist.forEach(function (v, i) {
+          var a = pt(i, v);
+          if (i === hist.length - 1 && i > 0) { var b = pt(i - 1, hist[i - 1]); a = [lerp(b[0], a[0], k), lerp(b[1], a[1], k)]; }
+          pts.push(a[0].toFixed(1) + ',' + a[1].toFixed(1));
+        });
+        line.setAttribute('points', pts.join(' '));
+        marks.forEach(function (mk, i) { if (i < pts.length - 1) { var q = pts[i].split(','); mk.setAttribute('cx', q[0]); mk.setAttribute('cy', q[1]); mk.setAttribute('opacity', 1); } else mk.setAttribute('opacity', 0); });
+        var last = pts[pts.length - 1].split(',');
+        head.setAttribute('cx', last[0]); head.setAttribute('cy', last[1]); head.setAttribute('opacity', 1);
+        var n = hist.length;
+        auc.textContent = (n > 1 ? lerp(hist[n - 2], hist[n - 1], k) : hist[0]).toFixed(3);
+      }
+    });
+  })();
+
+  /* ---------- scene 5: software: one request through the stack ---------- */
+  (function () {
+    var g = el('g', {}, svg);
+    txt(18, 26, 'API ENDPOINT', { 'font-size': 9, 'letter-spacing': 1.5 }, g);
+    el('rect', { x: 14, y: 38, width: 270, height: 196, rx: 8, fill: '#100E22', stroke: C.dim }, g);
+    var code = [
+      [['@app.post', C.up], ['("/predict")', C.ink]],
+      [['def ', C.down], ['predict', C.ink], ['():', C.mut]],
+      [['  img = ', C.ink], ['read', C.up], ['(request.files["leaf"])', C.mut]],
+      [['  p = ', C.ink], ['model', C.up], ['(img)', C.mut]],
+      [['  return ', C.down], ['{"disease": top(p),', C.ink]],
+      [['          "why": ', C.ink], ['gradcam', C.up], ['(img)}', C.mut]]
+    ];
+    var lines = code.map(function (parts, i) {
+      var y = 66 + i * 28;
+      var hl = el('rect', { x: 18, y: y - 15, width: 262, height: 21, rx: 3, fill: C.up, opacity: 0 }, g);
+      txt(26, y, String(i + 1), { 'font-size': 9, fill: '#5A5282' }, g);
+      var t = el('text', { x: 42, y: y, 'font-size': 10.5, 'font-family': 'IBM Plex Mono, monospace' }, g);
+      t.style.whiteSpace = 'pre';
+      var n = 0;
+      var spans = parts.map(function (pp) { n += pp[0].length; return { s: el('tspan', { fill: pp[1] }, t), txt: pp[0] }; });
+      return { spans: spans, n: n, hl: hl };
+    });
+    var total = lines.reduce(function (a, l) { return a + l.n; }, 0), typed = false;
+    function typeTo(left) {
+      lines.forEach(function (l) {
+        l.spans.forEach(function (sp) {
+          sp.s.textContent = sp.txt.slice(0, Math.max(0, Math.min(sp.txt.length, left)));
+          left -= sp.txt.length;
+        });
+      });
+    }
+    var layers = [['React app', 'browser'], ['API', 'Flask'], ['Model', 'CNN + Grad-CAM'], ['Database', 'Supabase']];
+    var boxes = layers.map(function (L, i) {
+      var y = 46 + i * 50;
+      if (i) el('line', { x1: 411, x2: 411, y1: y - 14, y2: y, stroke: C.dim }, g);
+      var r = el('rect', { x: 318, y: y, width: 186, height: 36, rx: 8, fill: C.node, stroke: '#5A5282' }, g);
+      txt(332, y + 22, L[0], { fill: C.ink, 'font-size': 11.5, 'font-family': 'Schibsted Grotesk, sans-serif' }, g);
+      txt(494, y + 22, L[1], { 'text-anchor': 'end', 'font-size': 9.5 }, g);
+      return { r: r, y: y + 18 };
+    });
+    var req = el('circle', { cx: 307, r: 5, fill: C.up, opacity: 0 }, g);
+    var status = txt(318, 270, '', { fill: C.ink, 'font-size': 11 }, g);
+    var log = txt(18, 266, '', { 'font-size': 10 }, g);
+    var log2 = txt(18, 288, '', { 'font-size': 10, fill: C.ink }, g);
+    txt(18, 326, 'how my apps serve a model: request in, answer and explanation out', { 'font-size': 9 }, g);
+    var res = {}, results = ['early blight', 'late blight', 'leaf mold', 'healthy'];
+    function newRequest() {
+      res = { ms: Math.round(rnd(48, 140)), cls: results[Math.floor(Math.random() * results.length)], p: Math.round(rnd(82, 97)) };
+      status.textContent = ''; log.textContent = ''; log2.textContent = '';
+    }
+    scenes.push({
+      g: g, name: 'Software', period: 4400,
+      start: newRequest,
+      tick: function (t) {
+        var off = 0;
+        if (!typed) { typeTo(Math.floor(total * Math.min(1, t / 1500))); if (t >= 1500) typed = true; off = 1500; }
+        else typeTo(total);
+        var u = t - off, y = null, active = -1;
+        if (u > 0 && u < 1400) { var a = ease(u / 1400); y = lerp(boxes[0].y, boxes[3].y, a); active = Math.min(3, Math.floor(a * 3.999)); }
+        else if (u >= 1400 && u < 2400) { var b = ease((u - 1400) / 1000); y = lerp(boxes[3].y, boxes[0].y, b); active = 3 - Math.min(3, Math.floor(b * 3.999)); }
+        req.setAttribute('opacity', y === null ? 0 : 1);
+        if (y !== null) { req.setAttribute('cy', y.toFixed(1)); req.setAttribute('fill', u < 1400 ? C.up : C.down); }
+        boxes.forEach(function (bx, i) { bx.r.setAttribute('stroke', i === active ? C.up : '#5A5282'); });
+        var hl = active === 0 ? 0 : active === 1 ? 2 : active === 2 ? (u < 1400 ? 3 : 5) : active === 3 ? 4 : -1;
+        lines.forEach(function (l, i) { l.hl.setAttribute('opacity', i === hl ? 0.16 : 0); });
+        if (u > 0 && !log.textContent) log.textContent = 'POST /predict  leaf.jpg';
+        if (u > 2400 && !status.textContent) {
+          status.textContent = '200 OK · ' + res.ms + ' ms';
+          log2.textContent = '→ ' + res.cls + ' ' + res.p + '% + heat map';
+        }
       }
     });
   })();
